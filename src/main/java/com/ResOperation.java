@@ -4,15 +4,16 @@ import java.util.List;
 
 public interface ResOperation {
 
-    void createRes(ResTableEntity res);                                     // создание записи
+    void createRes(ResTableEntity res);                            // создание записи
 
-    ResTableEntity getResByName(String param);                             // получить по параметру
+    ResTableEntity getResById(int id);                             // получить по параметру
 
-    List<ResTableEntity> getAllResorts();                                   // получить все
+    List<ResTableEntity> getAllResorts();                          // получить все
 
-    void updateRes(ResTableEntity res);                                     // обновить
+    void updateRes(int id, List<String> newParams);                // обновить
 
-    boolean deleteResById(int id);                      // удалить
+    void deleteResById(int id);                                    // удалить
+
 
 
 }

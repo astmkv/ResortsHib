@@ -6,9 +6,11 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-@WebServlet(name = "DeleteServlet", value = "/DeleteServlet")
-public class DeleteServlet extends HttpServlet {
+@WebServlet(name = "UpdateServlet", value = "/UpdateServlet")
+public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -16,13 +18,14 @@ public class DeleteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        int id = Integer.parseInt(request.getParameter("id_field"));
+        List<String> newParams = new ArrayList<>();
+        newParams.add(request.getParameter("name_field"));
+        newParams.add(request.getParameter("country_field"));
+        newParams.add(request.getParameter("season_field"));
+        newParams.add(request.getParameter("price_field"));
         DBResortControl dbResortControl = new DBResortControl();
-        int id = Integer.parseInt(request.getParameter("delete_field"));
-
-        dbResortControl.deleteResById(id);
+        dbResortControl.updateRes(id,newParams);
         response.sendRedirect(request.getContextPath() + "/index.jsp");
-//        request.getSession().setAttribute();
-//        response.sendRedirect( request.getContextPath()+ "/deletePage.jsp");
     }
 }

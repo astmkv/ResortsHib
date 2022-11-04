@@ -13,11 +13,10 @@ class DBResortControlTest {
     }
 
     @Test
-    boolean deleteResById(){
+    void deleteResById(){
         ResTableEntity res = new ResTableEntity("TEST","C_TEST","S_TEST", 99L);
-        res.setId(3);
+        res.setId(12);
         DBResortControl dbResortControl = new DBResortControl();
         dbResortControl.deleteResById(res.getId());
-        return false;
     }
 }
