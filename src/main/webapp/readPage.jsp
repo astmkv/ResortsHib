@@ -11,26 +11,22 @@
     </h4>
     <select name="req">
         <option value="all">show all</option>
-        <option value="search">search</option>
-    </select>
-    <select name="search">
-        <option value="name">name</option>
-        <option value="country">country</option>
-        <option value="season">season</option>
-        <option value="price">price</option>
+        <option value="search">search by Id</option>
     </select>
     <input type="text" name="search_field">
     <button> show results </button>
 
     <table>
-        <c:forEach var="resort" items="${resorts}">
+        <c:forEach var="resorts" items="${resorts}">
             <tr>
                 <td>
-                        ${resort}
+                        ${resorts}
                 </td>
             </tr>
         </c:forEach>
     </table>
+
+<%--    <div name="resort">${resort}</div>--%>
 </form>
 </body>
 </html>

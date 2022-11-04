@@ -25,5 +25,6 @@ public class CreateServlet extends HttpServlet {
         ResTableEntity res = new ResTableEntity(name, country, season, price);
         DBResortControl dbResortControl = new DBResortControl();
         dbResortControl.createRes(res);
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 }

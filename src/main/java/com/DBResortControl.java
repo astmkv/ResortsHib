@@ -34,30 +34,25 @@ public class DBResortControl implements ResOperation {
     }
 
     @Override
-    public ResTableEntity getResByName(String param) {
-        return null;
-    }
+    public ResTableEntity getResById(int id) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+//         result = null;
+        try {
+            transaction.begin();
+            ResTableEntity result = entityManager.find(ResTableEntity.class, id);
+            transaction.commit();
+            return result;
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
 
-//    @Override
-//    public ResTableEntity getResByParam(String param, String value) {
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction transaction = entityManager.getTransaction();
-//        ResTableEntity result = null;
-//        try {
-//            transaction.begin();
-//
-//            result = entityManager.find(ResTableEntity.class, param);
-//            transaction.commit();
-//        } finally {
-//            if (transaction.isActive()) {
-//                transaction.rollback();
-//            }
-//            entityManager.close();
-//            entityManagerFactory.close();
-//        }
-//        return result;
-//    }
+    }
 
     /**
      * @return
@@ -86,12 +81,32 @@ public class DBResortControl implements ResOperation {
     }
 
     @Override
-    public void updateRes(ResTableEntity res) {
+    public void updateRes(int id, List<String> newParams) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            // сама операция
+            ResTableEntity result = entityManager.find(ResTableEntity.class, id);
+            result.setName(newParams.get(0));
+            result.setCountry(newParams.get(1));
+            result.setSeason(newParams.get(2));
+            result.setPrice(Long.valueOf(newParams.get(3)));
 
+            transaction.commit();
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
     }
 
+
     @Override
-    public boolean deleteResById(int id) {
+    public void deleteResById(int id) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -104,7 +119,6 @@ public class DBResortControl implements ResOperation {
             // 2. удалить
             entityManager.remove(deleted);
             transaction.commit();
-            return true;
         } finally {
             if (transaction.isActive()) {
                 transaction.rollback();
